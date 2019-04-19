@@ -11,3 +11,7 @@
 ```
 ./install.sh
 ```
+### 增加权限
+```
+> chmod 777 xxxx.sh
+```
