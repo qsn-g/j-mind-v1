@@ -48,9 +48,9 @@ export default class Line {
     // 保证当父元件和子元件在同一水平线时，也能显示出线条
     this.options.width = Math.abs(fatherPoint.x - childPoint.x) >= 2 ? Math.abs(fatherPoint.x - childPoint.x) : 2
     this.options.height = Math.abs(fatherPoint.y - childPoint.y) >= 2 ? Math.abs(fatherPoint.y - childPoint.y) : 2
-    this.canvas.width = this.options.width
+    this.canvas.width = this.options.width + lineOffSet * 2
     this.canvas.height = this.options.height + lineOffSet * 2
-    const canvasStyle = `left: ${this.options.left}px; top: ${this.options.top - 5}px;`
+    const canvasStyle = `left: ${this.options.left - lineOffSet}px; top: ${this.options.top - lineOffSet}px;`
     this.canvas.setAttribute('style', canvasStyle)
     this.drawCanvas(fatherPoint, childPoint)
   }
@@ -67,8 +67,8 @@ export default class Line {
     usePoint.y1 = usePoint.y2
     const ctx = this.canvas.getContext('2d')
     ctx.beginPath()
-    ctx.moveTo(usePoint.x0, usePoint.y0 + lineOffSet)
-    ctx.quadraticCurveTo(usePoint.x1, usePoint.y1 + lineOffSet, usePoint.x2, usePoint.y2 + lineOffSet)
+    ctx.moveTo(usePoint.x0 + lineOffSet, usePoint.y0 + lineOffSet)
+    ctx.quadraticCurveTo(usePoint.x1 + lineOffSet, usePoint.y1 + lineOffSet, usePoint.x2 + lineOffSet, usePoint.y2 + lineOffSet)
     ctx.lineWidth = this.options.lineWidth
     ctx.strokeStyle = this.options.color
     ctx.stroke()
