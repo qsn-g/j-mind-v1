@@ -10,7 +10,7 @@ export default class Obj {
       left: 150,
       top: 80,
       label: '',
-      lineWidth: 2,
+      lineWidth: 2, // 这里注明一下 option.width 和 option.height 是指包含了两边的linewidth的总盒子大小
       oldLeft: null,
       oldTop: null,
       pirUrl: '',
@@ -52,10 +52,7 @@ export default class Obj {
       this.options.height = this.div.offsetHeight
     }
     this.label.onkeydown = () => {
-      this.options.width = this.div.offsetWidth
-      this.options.height = this.div.offsetHeight
-      this.updataPoint()
-      this.updataLines()
+      this.updataSize()
     }
     this.image.ondblclick = () => {
       window.open(this.options.pirUrl)
@@ -191,6 +188,14 @@ export default class Obj {
       elem.updataCanvas()
     })
   }
+  // 更新大小
+  updataSize () {
+    this.options.width = this.div.offsetWidth
+    this.options.height = this.div.offsetHeight
+    this.updataPoint()
+    this.updataLines()
+  }
+  // 插入图片
   setImage (pirUrl) {
     this.image.src = pirUrl
     this.image.width = 0
@@ -201,6 +206,7 @@ export default class Obj {
       const override = height / (this.options.height - 4)
       this.image.height = height / override
       this.image.width = width / override
+      this.updataSize()
     }
   }
   // 设置元件的坐标
@@ -246,15 +252,6 @@ export default class Obj {
       brObj[index] = brObj[index + direction]
       brObj[index + direction] = obj
     }
-  }
-  // 设置元件的大小
-  setSize (width, height) {
-    width = width || this.options.width
-    height = height || this.options.height
-    this.options.width = width
-    this.options.height = height
-    this.div.style.width = `${this.options.width}px`
-    this.div.style.height = `${this.options.height}px`
   }
   // 为元件取名
   createNewID () {

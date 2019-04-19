@@ -19,3 +19,5 @@ export const lineColor = [
   '#48D1CC', '#00FF7F', '#3CB371', '#32CD32', '#006400', '#ADFF2F', '#FFFF00', '#BDB76B', '#F0E68C',
   '#FFD700', '#DAA520', '#FF8C00', '#CD853F', '#FF4500', '#CD5C5C', '#C0C0C0', '#696969'
 ]
+
+export const lineOffSet = 5

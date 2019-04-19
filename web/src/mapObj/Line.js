@@ -1,4 +1,5 @@
-import {lineColor} from '../config/config'
+import {lineColor, lineOffSet} from '../config/config'
+
 export default class Line {
   constructor (fatherObj, childObj, options) {
     const defaultOptions = {
@@ -48,8 +49,8 @@ export default class Line {
     this.options.width = Math.abs(fatherPoint.x - childPoint.x) >= 2 ? Math.abs(fatherPoint.x - childPoint.x) : 2
     this.options.height = Math.abs(fatherPoint.y - childPoint.y) >= 2 ? Math.abs(fatherPoint.y - childPoint.y) : 2
     this.canvas.width = this.options.width
-    this.canvas.height = this.options.height
-    const canvasStyle = `left: ${this.options.left}px; top: ${this.options.top}px;`
+    this.canvas.height = this.options.height + lineOffSet * 2
+    const canvasStyle = `left: ${this.options.left}px; top: ${this.options.top - 5}px;`
     this.canvas.setAttribute('style', canvasStyle)
     this.drawCanvas(fatherPoint, childPoint)
   }
@@ -66,8 +67,8 @@ export default class Line {
     usePoint.y1 = usePoint.y2
     const ctx = this.canvas.getContext('2d')
     ctx.beginPath()
-    ctx.moveTo(usePoint.x0, usePoint.y0)
-    ctx.quadraticCurveTo(usePoint.x1, usePoint.y1, usePoint.x2, usePoint.y2)
+    ctx.moveTo(usePoint.x0, usePoint.y0 + lineOffSet)
+    ctx.quadraticCurveTo(usePoint.x1, usePoint.y1 + lineOffSet, usePoint.x2, usePoint.y2 + lineOffSet)
     ctx.lineWidth = this.options.lineWidth
     ctx.strokeStyle = this.options.color
     ctx.stroke()
@@ -86,7 +87,7 @@ export default class Line {
   initOptions () {
     if (this.fatherObj.fatherLine) {
       this.options.color = this.fatherObj.fatherLine.options.color
-      this.options.lineWidth = (this.fatherObj.fatherLine.options.lineWidth - 1) >= 2 ? this.fatherObj.fatherLine.options.lineWidth - 1 : 2
+      this.options.lineWidth = (this.fatherObj.fatherLine.options.lineWidth - 0.5) >= 2 ? this.fatherObj.fatherLine.options.lineWidth - 1 : 2
     } else {
       this.options.color = lineColor[parseInt(Math.random() * lineColor.length)]
     }
