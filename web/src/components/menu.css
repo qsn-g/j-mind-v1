@@ -1,0 +1,59 @@
+.menu {
+  position: absolute;
+  width: 100%;
+}
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: rgb(144, 144, 144);
+  justify-content: center;
+  align-items: center;
+}
+.title input[type = 'text'] {
+  background-color: rgb(0, 0, 0, 0);
+  outline: none;
+  border: none;
+  color: rgb(236, 221, 221);
+  text-align: center;
+  font-size: 15px;
+  height: 35px;
+}
+.buttonList {
+  border: 2px dashed #aaa;
+  width: 150px;
+  position: absolute;
+  left: 3px;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  right: 0px;
+  color: #aaa;
+  font-size: 14px;
+}
+.buttonList a {
+  text-decoration: none;
+}
+.buttonList a:link {
+  color: #aaa;
+}
+.buttonList a:hover {
+  color: black;
+}
+.buttonList div {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+}
+.buttonList div:hover {
+  color: black;
+}
+.buttonList .fileButton span {
+  position: absolute;
+}
+.buttonList .fileButton input[type = 'file'] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+}
