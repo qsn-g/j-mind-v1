@@ -98,6 +98,7 @@ export default class Mindmap {
     targetObj.image.width = 0
     targetObj.image.height = 0
     targetObj.options.pirUrl = ''
+    targetObj.updataSize()
   }
   layout (targetObj) {
     targetObj.childObjListSort()
