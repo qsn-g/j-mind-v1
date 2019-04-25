@@ -91,6 +91,7 @@ export default class Mindmap {
     fr.onload = (event) => {
       const data = event.target.result
       targetObj.setImage(data)
+      this.contextMenu.insertFile.value = ''
     }
   }
   deletePir (targetObj) {

@@ -31,6 +31,7 @@ export default class Contextmenu {
     let file = document.createElement('input')
     file.type = 'file'
     bt.appendChild(file)
+    this.insertFile = file
     this.insertPicListener(bt)
   }
   insertPicListener (button) {
