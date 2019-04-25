@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import { EventBus } from '../util/eventBus.js'
+import {emitErrMess} from '../util/errResolve.js'
+import {EventBus} from '../util/eventBus.js'
 import ajax from '../util/ajax'
 export default {
   data () {
@@ -47,16 +48,8 @@ export default {
           this.allMap.push(elem)
         })
       } catch (error) {
-        switch (error.response.status) {
-          case (504): {
-            EventBus.$emit('warm', {delay: 1, message: '连接服务器失败'})
-            break
-          }
-        }
+        emitErrMess({delay: 1, code: error.response.status})
       }
-    },
-    test () {
-      console.log('test')
     }
   }
 }

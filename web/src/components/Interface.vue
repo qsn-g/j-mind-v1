@@ -27,7 +27,8 @@
 import Mindmap from '../mapObj/Mindmap.js'
 import './obj.css'
 import './menu.css'
-import { EventBus } from '../util/eventBus.js'
+import {emitErrMess} from '../util/errResolve.js'
+import {EventBus} from '../util/eventBus.js'
 import ajax from '../util/ajax.js'
 import selectMap from './select-map'
 import cal from '../mapObj/methods.js'
@@ -72,42 +73,28 @@ export default {
     },
     async deleteMap () {
       if (!this.mindMap || !this.mindMap.mapUid) {
-        EventBus.$emit('warm', {delay: 1, message: '无思维导图'})
+        emitErrMess({delay: 1, message: '无思维导图'})
         return
       }
-      EventBus.$emit('warm', {message: '正在删除'})
+      emitErrMess({message: '正在删除'})
       try {
         const result = await ajax.deleteMindMapbyUid({mapUid: this.mindMap.mapUid})
         this.mindMap.clearStage()
         this.mindMap = null
         this.mapName = '选择思维导图'
-        EventBus.$emit('warm', {message: result.data, delay: 1})
+        emitErrMess({message: result.data.res, delay: 1, code: result.data.errno})
       } catch (error) {
-        switch (error.response.status) {
-          case (504): {
-            EventBus.$emit('warm', {delay: 1, message: '连接服务器失败'})
-            break
-          }
-        }
+        emitErrMess({delay: 1, code: error.response.status})
       }
     },
     async saveInfo () {
       if (!this.mindMap) {
-        EventBus.$emit('warm', {delay: 1, message: '无思维导图'})
+        emitErrMess({delay: 1, message: '无思维导图'})
         return
       }
-      EventBus.$emit('warm', {message: '正在保存'})
-      try {
-        const result = await this.mindMap.saveMindmap()
-        EventBus.$emit('warm', {delay: 1, message: result.data})
-      } catch (error) {
-        switch (error.response.status) {
-          case (504): {
-            EventBus.$emit('warm', {delay: 1, message: '连接服务器失败'})
-            break
-          }
-        }
-      }
+      emitErrMess({message: '正在保存'})
+      const result = await this.mindMap.saveMindmap()
+      emitErrMess({delay: 1, message: result.data.res, code: result.data.errno})
     },
     reDrawbyUid (mapUid) {
       this.mindMap.reDrawMapbyUid({ mapUid })
@@ -125,7 +112,7 @@ export default {
     async onLoad (event) {
       const file = event.target.files[0]
       if (!file || file.name.substr(-4, 4) !== '.jzx') {
-        EventBus.$emit('warm', {delay: 1, message: '请上传正确文件'})
+        emitErrMess({delay: 1, message: '请上传正确文件'})
         return
       }
       const mapName = file.name.replace('.jzx', '')

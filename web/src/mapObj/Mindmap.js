@@ -4,7 +4,7 @@ import cal from './methods'
 import { config } from '../config/config'
 import Line from './Line'
 import ajax from '../util/ajax'
-import { EventBus } from '../util/eventBus'
+import {emitErrMess} from '../util/errResolve'
 export default class Mindmap {
   constructor (options) {
     this.objList = []
@@ -82,7 +82,7 @@ export default class Mindmap {
     if (!files[0]) return
     const fileType = files[0].name.substring(files[0].name.lastIndexOf('.')).toLowerCase()
     if (!fileType.match(/.png|.jpg|.jpeg/)) {
-      EventBus.$emit('warm', {delay: 1, message: '文件格式错误'})
+      emitErrMess({delay: 1, message: '文件格式错误'})
       return
     }
     targetObj.options.pirFile = files[0]
@@ -163,7 +163,7 @@ export default class Mindmap {
       if (!jsonInfo) return
       this.reDrawObj(jsonInfo)
     } catch (error) {
-      EventBus.$emit('warm', {delay: 1, message: '文件已损坏'})
+      emitErrMess({delay: 1, message: '文件已损坏'})
     }
   }
   reDrawObj (jsonInfo, fatherObj) {
