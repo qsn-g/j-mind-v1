@@ -13,6 +13,15 @@ class FileWorker {
       })
     })
   }
+  createDir2 (dirName) {
+    try {
+      fs.mkdirSync(`${path.gen}${dirName}`)
+      return true
+    } catch (e) {
+      console.log(e)
+      return '创建失败'
+    }
+  }
   updataFile (fileName, info) {
     return new Promise((resolve) => {
       fs.writeFile(`${path.public}/${fileName}.jzx`, info, 'utf-8', (err) => {
@@ -56,6 +65,9 @@ class FileWorker {
         resolve(fileData.toString())
       })
     })
+  }
+  readFileSync (dirName) {
+    return fs.readFileSync(`${path.public}/${fileName}.jzx`) || ''
   }
 }
 
