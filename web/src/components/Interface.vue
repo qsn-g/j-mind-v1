@@ -121,6 +121,7 @@ export default {
       this.mindMap = new Mindmap({ mapName: mapName })
       this.mapName = mapName
       this.mindMap.reDrawMindmap(cal.jdecode(result))
+      event.target.value = ''
     },
     getFileData (file) {
       return new Promise((resolve) => {
