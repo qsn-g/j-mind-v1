@@ -21,11 +21,12 @@ export default {
     return {
       menuList: [
         {title: 'JMind', index: '0', class: 'el-icon-reading'},
-        {title: '新建导图', index: '1', class: 'el-icon-s-opportunity'},
-        {title: '保存导图', index: '2', class: 'el-icon-upload'},
-        {title: '分屏(计划中)', index: '3', class: 'el-icon-menu'}
+        {title: '查看导图', index: '1', class: 'el-icon-search'},
+        {title: '新建导图', index: '2', class: 'el-icon-s-opportunity'},
+        {title: '保存导图', index: '3', class: 'el-icon-upload'},
+        {title: '分屏(计划中)', index: '4', class: 'el-icon-menu'}
       ],
-      isCollapse: false
+      isCollapse: true
     }
   },
   methods: {
@@ -34,6 +35,23 @@ export default {
       switch (index) {
         case ('0'): {
           this.isCollapse = !this.isCollapse
+          break
+        }
+        case ('1'): {
+          this.$router.push({
+            name: 'allMap',
+            path: '/allMap'
+          })
+          break
+        }
+        case ('2'): {
+          this.$router.push({
+            name: 'drawSpace',
+            path: '/drawSpace',
+            params: {
+              mapUid: 'newMap'
+            }
+          })
           break
         }
       }
