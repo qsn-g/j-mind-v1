@@ -6,6 +6,7 @@
 <script>
 import Mindmap from '@/mapObj/Mindmap.js'
 import '../css/obj.css'
+import {EventBus} from '@/util/eventBus.js'
 export default {
   data () {
     return {
@@ -15,11 +16,26 @@ export default {
     }
   },
   beforeMount () {
-    this.mapInfo = this.$store.state.isUsing
+  },
+  beforeDestroy () {
+    EventBus.$off('mapChange', this.reDrawMap)
+    this.mindMap && this.mindMap.clearStage()
   },
   mounted () {
-    this.mindMap = new Mindmap({mapUid: this.mapInfo.mapUid, mapName: this.mapInfo.mapUid})
-    this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
+    this.reDrawMap()
+    EventBus.$on('mapChange', this.reDrawMap)
+  },
+  methods: {
+    test (map) {
+      console.log(map)
+    },
+    reDrawMap () {
+      this.mindMap && this.mindMap.clearStage()
+      this.mapInfo = this.$store.state.isUsing
+      if (!this.mapInfo) return
+      this.mindMap = new Mindmap({mapUid: this.mapInfo.mapUid, mapName: this.mapInfo.mapName})
+      this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
+    }
   }
 }
 </script>

@@ -14,7 +14,7 @@
         :name="tab.mapUid">
         </el-tab-pane>
       </el-tabs>
-      <router-view></router-view>
+      <router-view v-on:isUsing="getUsingMap"></router-view>
     </div>
     <!-- <warm></warm>
     <face></face> -->
@@ -34,11 +34,34 @@ export default {
       editorMap: ''
     }
   },
+  provide () {
+    return {
+      reload: () => {
+
+      }
+    }
+  },
   watch: {
     editorMap (val) {
       const store = this.$store
       const index = getIndexfromList(val, store.state.mapList)
-      store.dispatch('setUsing', store.state.mapList[index])
+      const isUsing = store.state.mapList[index]
+      store.dispatch('setUsing', isUsing)
+      if (isUsing && isUsing.mapUid !== '' && isUsing.mapName !== '' && isUsing !== {}) {
+        this.$router.push({
+          name: 'drawSpace',
+          path: '/drawSpace',
+          params: {
+            mapName: isUsing.mapName,
+            mapUid: isUsing.mapUid
+          }
+        })
+      }
+    },
+    $route (to, from) {
+      if (to.path !== '/drawSpace') {
+        this.editorMap = ''
+      }
     }
   },
   beforeMout () {},
@@ -53,11 +76,17 @@ export default {
       'deleteMap'
     ]),
     removeTab (targetName) {
+      const store = this.$store
+      const index = getIndexfromList(targetName, store.state.mapList)
       this.deleteMap(targetName)
-      if (targetName === this.$store.state.isUsing.mapUid) {
-      } else {
-        console.log('notUsing')
+      if (!store.state.isUsing) return
+      if (targetName === store.state.isUsing.mapUid) {
+        const nextTab = store.state.mapList[index] || store.state.mapList[index - 1]
+        if (nextTab) this.editorMap = nextTab.mapUid
       }
+    },
+    getUsingMap (val) {
+      this.editorMap = val
     }
   }
 }

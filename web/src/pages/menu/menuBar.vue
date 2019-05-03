@@ -7,7 +7,11 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       :collapse="isCollapse">
-      <el-menu-item v-for="menu in menuList" :key="menu.index" :index="menu.index" @click="toggle">
+      <el-menu-item
+        v-for="menu in menuList"
+        :key="menu.index"
+        :index="menu.index"
+        @click="toggle">
         <i :class="menu.class"></i>
         <span slot="title">{{ menu.title }}</span>
       </el-menu-item>
@@ -24,7 +28,9 @@ export default {
         {title: '查看导图', index: '1', class: 'el-icon-search'},
         {title: '新建导图', index: '2', class: 'el-icon-s-opportunity'},
         {title: '保存导图', index: '3', class: 'el-icon-upload'},
-        {title: '分屏(计划中)', index: '4', class: 'el-icon-menu'}
+        {title: '上传文件', index: '5', class: 'el-icon-upload2'},
+        {title: '下载文件', index: '6', class: 'el-icon-download'},
+        {title: '分屏(计划中)', index: '7', class: 'el-icon-menu'}
       ],
       isCollapse: true
     }
@@ -45,13 +51,13 @@ export default {
           break
         }
         case ('2'): {
-          this.$router.push({
-            name: 'drawSpace',
-            path: '/drawSpace',
-            params: {
-              mapUid: 'newMap'
-            }
-          })
+          // this.$router.push({
+          //   name: 'drawSpace',
+          //   path: '/drawSpace',
+          //   params: {
+          //     mapUid: 'newMap'
+          //   }
+          // })
           break
         }
       }

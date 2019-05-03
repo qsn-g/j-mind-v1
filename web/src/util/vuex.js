@@ -1,12 +1,16 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+import {EventBus} from './eventBus'
 import { getIndexfromList } from './common'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     mapList: [],
-    isUsing: {},
+    isUsing: {
+      mapUid: '',
+      mapName: ''
+    },
     isUsingIndex: '0'
   },
   mutations: {
@@ -28,6 +32,7 @@ export default new Vuex.Store({
     },
     setUsing ({commit}, map) {
       commit('setUsing', map)
+      EventBus.$emit('mapChange', map)
     },
     deleteMap ({commit}, mapUid) {
       commit('deleteMap', mapUid)
