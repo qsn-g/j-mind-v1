@@ -127,10 +127,6 @@ export default class Mindmap {
     const pirPromiseArr = this.getPirPromiseArr(startArr[0])
     await this.resolvePirPromiseArr(pirPromiseArr)
     const allObjInfo = cal.getAllObjInfo(startArr[0], '缓存')
-    if (!this.mapUid) {
-      const result = await ajax.getRandomUid()
-      this.mapUid = result.data.toString()
-    }
     return ajax.savemindMapbyID({mapName: this.mapName || '默认名', mapUid: this.mapUid, info: allObjInfo})
   }
   async resolvePirPromiseArr (pirPromiseArr) {
@@ -156,6 +152,7 @@ export default class Mindmap {
     const stringInfo = result.data
     if (!result.data) return false
     this.reDrawMindmap(stringInfo)
+    return true
   }
   reDrawMindmap (stringInfo) {
     if (!stringInfo) return false

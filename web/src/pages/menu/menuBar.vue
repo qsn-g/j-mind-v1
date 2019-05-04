@@ -20,14 +20,14 @@
 </template>
 
 <script>
+import { EventBus } from '@/util/eventBus'
 export default {
   data () {
     return {
       menuList: [
         {title: 'JMind', index: '0', class: 'el-icon-reading'},
         {title: '查看导图', index: '1', class: 'el-icon-search'},
-        {title: '新建导图', index: '2', class: 'el-icon-s-opportunity'},
-        {title: '保存导图', index: '3', class: 'el-icon-upload'},
+        {title: '保存导图', index: '2', class: 'el-icon-upload'},
         {title: '上传文件', index: '5', class: 'el-icon-upload2'},
         {title: '下载文件', index: '6', class: 'el-icon-download'},
         {title: '分屏(计划中)', index: '7', class: 'el-icon-menu'}
@@ -51,13 +51,7 @@ export default {
           break
         }
         case ('2'): {
-          // this.$router.push({
-          //   name: 'drawSpace',
-          //   path: '/drawSpace',
-          //   params: {
-          //     mapUid: 'newMap'
-          //   }
-          // })
+          EventBus.$emit('saveMap')
           break
         }
       }

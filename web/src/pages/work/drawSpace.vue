@@ -18,23 +18,45 @@ export default {
   beforeMount () {
   },
   beforeDestroy () {
-    EventBus.$off('mapChange', this.reDrawMap)
+    this.removeEventBus()
     this.mindMap && this.mindMap.clearStage()
   },
   mounted () {
     this.reDrawMap()
-    EventBus.$on('mapChange', this.reDrawMap)
+    this.addEventBus()
   },
   methods: {
-    test (map) {
-      console.log(map)
+    removeEventBus () {
+      EventBus.$off('mapChange', this.reDrawMap)
+      EventBus.$off('saveMap', this.saveMap)
     },
-    reDrawMap () {
+    addEventBus () {
+      EventBus.$on('mapChange', this.reDrawMap)
+      EventBus.$on('saveMap', this.saveMap)
+    },
+    async reDrawMap () {
       this.mindMap && this.mindMap.clearStage()
       this.mapInfo = this.$store.state.isUsing
       if (!this.mapInfo) return
       this.mindMap = new Mindmap({mapUid: this.mapInfo.mapUid, mapName: this.mapInfo.mapName})
-      this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
+      const isOld = await this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
+      if (!isOld && this.mindMap && this.mindMap.mapUid) this.mindMap.addObj()
+    },
+    async saveMap () {
+      if (!this.mindMap) {
+        this.$message({
+          message: `联系阿星`,
+          type: 'warning',
+          showClose: true
+        })
+      }
+      const saveResult = await this.mindMap.saveMindmap()
+      this.$message({
+        message: `"${this.mindMap.mapName}" => ${saveResult.data.res}`,
+        type: 'success',
+        duration: 1500,
+        showClose: true
+      })
     }
   }
 }

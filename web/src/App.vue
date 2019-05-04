@@ -82,7 +82,14 @@ export default {
       if (!store.state.isUsing) return
       if (targetName === store.state.isUsing.mapUid) {
         const nextTab = store.state.mapList[index] || store.state.mapList[index - 1]
-        if (nextTab) this.editorMap = nextTab.mapUid
+        if (nextTab) {
+          this.editorMap = nextTab.mapUid
+        } else {
+          this.$router.replace({
+            name: 'allMap',
+            path: '/allMap'
+          })
+        }
       }
     },
     getUsingMap (val) {
