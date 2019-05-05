@@ -9,10 +9,8 @@ class Basic {
         const timeStamp = new Date().getTime().toString()
         connection.query(sqlWord.saveInfo, [jsonInfo.mapName, jsonInfo.mapUid, timeStamp, jsonInfo.mapName, timeStamp], (err, success) => {
           if (err) {
-            console.log(err)
             reject(err)
           } else {
-            console.log(success)
             resolve(success)
           }
         })
