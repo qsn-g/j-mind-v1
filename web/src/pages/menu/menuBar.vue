@@ -28,9 +28,8 @@ export default {
         {title: 'JMind', index: '0', class: 'el-icon-reading'},
         {title: '查看导图', index: '1', class: 'el-icon-search'},
         {title: '保存导图', index: '2', class: 'el-icon-upload'},
-        {title: '上传文件', index: '5', class: 'el-icon-upload2'},
-        {title: '下载文件', index: '6', class: 'el-icon-download'},
-        {title: '分屏(计划中)', index: '7', class: 'el-icon-menu'}
+        {title: '下载文件', index: '3', class: 'el-icon-download'},
+        {title: '分屏(计划中)', index: '4', class: 'el-icon-menu'}
       ],
       isCollapse: true
     }
@@ -52,6 +51,10 @@ export default {
         }
         case ('2'): {
           EventBus.$emit('saveMap')
+          break
+        }
+        case ('3'): {
+          EventBus.$emit('downLoad')
           break
         }
       }

@@ -14,7 +14,7 @@
         :name="tab.mapUid">
         </el-tab-pane>
       </el-tabs>
-      <router-view v-on:isUsing="getUsingMap"></router-view>
+      <router-view v-on:isUsing="getUsingMap" v-on:removeMap="deleteMap"></router-view>
     </div>
     <!-- <warm></warm>
     <face></face> -->
@@ -73,12 +73,13 @@ export default {
   methods: {
     ...mapActions([
       'setUsingIndex',
-      'deleteMap'
+      'deleteUseMap'
     ]),
     removeTab (targetName) {
       const store = this.$store
       const index = getIndexfromList(targetName, store.state.mapList)
-      this.deleteMap(targetName)
+      if (index < 0) return
+      this.deleteUseMap(targetName)
       if (!store.state.isUsing) return
       if (targetName === store.state.isUsing.mapUid) {
         const nextTab = store.state.mapList[index] || store.state.mapList[index - 1]
@@ -94,6 +95,9 @@ export default {
     },
     getUsingMap (val) {
       this.editorMap = val
+    },
+    deleteMap (val) {
+      this.removeTab(val)
     }
   }
 }

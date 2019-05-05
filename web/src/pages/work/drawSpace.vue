@@ -7,6 +7,7 @@
 import Mindmap from '@/mapObj/Mindmap.js'
 import '../css/obj.css'
 import {EventBus} from '@/util/eventBus.js'
+import {jDecode} from '@/util/common.js'
 export default {
   data () {
     return {
@@ -35,12 +36,21 @@ export default {
       EventBus.$on('saveMap', this.saveMap)
     },
     async reDrawMap () {
-      this.mindMap && this.mindMap.clearStage()
-      this.mapInfo = this.$store.state.isUsing
-      if (!this.mapInfo) return
-      this.mindMap = new Mindmap({mapUid: this.mapInfo.mapUid, mapName: this.mapInfo.mapName})
-      const isOld = await this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
-      if (!isOld && this.mindMap && this.mindMap.mapUid) this.mindMap.addObj()
+      try {
+        this.mindMap && this.mindMap.clearStage()
+        this.mapInfo = this.$store.state.isUsing
+        if (!this.mapInfo) return
+        this.mindMap = new Mindmap({mapUid: this.mapInfo.mapUid, mapName: this.mapInfo.mapName})
+        const sessionJson = sessionStorage.getItem(this.mapInfo.mapUid)
+        if (sessionJson) {
+          this.mindMap.reDrawMindmap(jDecode(sessionJson))
+        } else {
+          const isOld = await this.mindMap.reDrawMapbyUid({mapUid: this.mapInfo.mapUid})
+          if (!isOld && this.mindMap && this.mindMap.mapUid) this.mindMap.addObj()
+        }
+      } catch (err) {
+        console.error(err)
+      }
     },
     async saveMap () {
       if (!this.mindMap) {

@@ -20,7 +20,7 @@ export default new Vuex.Store({
     setUsing (state, map) {
       state.isUsing = map
     },
-    deleteMap (state, mapUid) {
+    deleteUseMap (state, mapUid) {
       const index = getIndexfromList(mapUid, state.mapList)
       state.mapList.splice(index, 1)
     }
@@ -28,14 +28,13 @@ export default new Vuex.Store({
   actions: {
     addMap ({commit}, map) {
       commit('addMap', map)
-      commit('setUsing', map)
     },
     setUsing ({commit}, map) {
       commit('setUsing', map)
-      EventBus.$emit('mapChange', map)
+      EventBus.$emit('mapChange', map) // drawSpace 里 监听mapChange
     },
-    deleteMap ({commit}, mapUid) {
-      commit('deleteMap', mapUid)
+    deleteUseMap ({commit}, mapUid) {
+      commit('deleteUseMap', mapUid)
     }
   }
 })
