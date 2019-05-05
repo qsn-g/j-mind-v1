@@ -46,11 +46,17 @@ const jDecode = (str) => {
   return window.decodeURIComponent(window.atob(str))
 }
 
+const getTimeFromStamp = (timeStamp) => {
+  const time = new Date(parseInt(timeStamp)).toLocaleString().replace(/:\d{1,2}$/, ' ')
+  return time.toString()
+}
+
 export {
   getIndexfromList,
   isUseFile,
   readTextData,
   getFileName,
   jCode,
-  jDecode
+  jDecode,
+  getTimeFromStamp
 }

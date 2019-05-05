@@ -6,10 +6,13 @@ class Basic {
   updateRecord (jsonInfo) {
     return new Promise((resolve, reject) => {
       conn.connCallback((connection) => {
-        connection.query(sqlWord.saveInfo, [jsonInfo.mapName, jsonInfo.mapUid, jsonInfo.mapName], (err, success) => {
+        const timeStamp = new Date().getTime().toString()
+        connection.query(sqlWord.saveInfo, [jsonInfo.mapName, jsonInfo.mapUid, timeStamp, jsonInfo.mapName, timeStamp], (err, success) => {
           if (err) {
+            console.log(err)
             reject(err)
           } else {
+            console.log(success)
             resolve(success)
           }
         })

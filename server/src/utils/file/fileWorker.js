@@ -66,8 +66,11 @@ class FileWorker {
       })
     })
   }
-  readFileSync (dirName) {
-    return fs.readFileSync(`${path.public}/${fileName}.jzx`) || ''
+  fileMtime (fileName) {
+    const path = `${path.public}/${fileName}.jzx`
+    const fileStat = fs.statSync(fileName)
+    console.log(fileStat.mtime)
+    return fileStat.mtime
   }
 }
 

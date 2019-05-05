@@ -20,13 +20,14 @@
     </el-row>
     <el-table
     :data="tableData"
-    >
+    :default-sort = "{prop: 'mTime', order: 'descending'}">
       <el-table-column
       type="index">
       </el-table-column>
       <el-table-column
       sortable
-      label="更新日期">
+      label="更新日期"
+      prop="mTime">
       </el-table-column>
       <el-table-column
       label="导图名称"
@@ -55,7 +56,7 @@
 <script>
 import ajax from '@/util/ajax.js'
 import {mapActions} from 'vuex'
-import {getIndexfromList, isUseFile, readTextData, getFileName} from '@/util/common.js'
+import {getIndexfromList, isUseFile, readTextData, getFileName, getTimeFromStamp} from '@/util/common.js'
 export default {
   data () {
     return {
@@ -72,6 +73,7 @@ export default {
     async getMapList () {
       const result = await ajax.getmindMapList()
       result.data.forEach((elem) => {
+        elem.mTime = getTimeFromStamp(elem.mTime)
         this.tableData.push(elem)
       })
     },
