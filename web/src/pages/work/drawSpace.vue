@@ -30,10 +30,12 @@ export default {
     removeEventBus () {
       EventBus.$off('mapChange', this.reDrawMap)
       EventBus.$off('saveMap', this.saveMap)
+      EventBus.$off('downLoad', this.downLoadFile)
     },
     addEventBus () {
       EventBus.$on('mapChange', this.reDrawMap)
       EventBus.$on('saveMap', this.saveMap)
+      EventBus.$on('downLoad', this.downLoadFile)
     },
     async reDrawMap () {
       try {
@@ -59,6 +61,7 @@ export default {
           type: 'warning',
           showClose: true
         })
+        return
       }
       const saveResult = await this.mindMap.saveMindmap()
       this.$message({
@@ -67,6 +70,17 @@ export default {
         duration: 1500,
         showClose: true
       })
+    },
+    downLoadFile () {
+      if (!this.mindMap) {
+        this.$message({
+          message: `联系阿星`,
+          type: 'warning',
+          showClose: true
+        })
+        return
+      }
+      this.mindMap.downLoadMap()
     }
   }
 }

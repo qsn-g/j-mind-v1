@@ -128,21 +128,15 @@ class Methods {
     })
     return result
   }
-  /*
-    返回思维导图的信息，
-    type类型：
-    1.缓存：json数据不会形成环形数据
-    2.格式化：默认选项
-    3.添加元素：x坐标不变，格式化y坐标
-   */
+  /**
+   * 返回思维导图的信息，
+   * type类型：
+   * 1.缓存：json数据不会形成环形数据
+   * 2.格式化：默认选项
+   * 3.添加元素：x坐标不变，格式化y坐标
+  */
   getAllObjInfo (obj, type = '') {
     return this.layout(obj, null, type)
-  }
-  jcode (str) {
-    return window.btoa(window.encodeURIComponent(str))
-  }
-  jdecode (str) {
-    return window.decodeURIComponent(window.atob(str))
   }
 }
 

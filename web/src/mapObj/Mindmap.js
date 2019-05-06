@@ -3,8 +3,8 @@ import Contextmenu from './Contextmenu'
 import cal from './methods'
 import { config } from '../config/config'
 import Line from './Line'
-import ajax from '../util/ajax'
-import {emitErrMess} from '../util/errResolve'
+import ajax from '@/util/ajax'
+import {jCode} from '@/util/common.js'
 export default class Mindmap {
   constructor (options) {
     this.objList = []
@@ -82,7 +82,6 @@ export default class Mindmap {
     if (!files[0]) return
     const fileType = files[0].name.substring(files[0].name.lastIndexOf('.')).toLowerCase()
     if (!fileType.match(/.png|.jpg|.jpeg/)) {
-      emitErrMess({delay: 1, message: '文件格式错误'})
       return
     }
     targetObj.options.pirFile = files[0]
@@ -161,7 +160,6 @@ export default class Mindmap {
       if (!jsonInfo) return
       this.reDrawObj(jsonInfo)
     } catch (error) {
-      emitErrMess({delay: 1, message: '文件已损坏'})
     }
   }
   reDrawObj (jsonInfo, fatherObj) {
@@ -191,11 +189,17 @@ export default class Mindmap {
   async downLoadMap () {
     try {
       const result = await ajax.getmindMapbyID({ mapUid: this.mapUid })
-      const strInfo = cal.jcode(result.data)
-      const file = document.getElementById('dl_Button')
+      const strInfo = jCode(result.data)
+      const file = document.createElement('a')
+      file.style.display = 'none'
+      file.download = `${this.mapName}.jzx`
       const blob = new Blob([ strInfo ])
       file.href = URL.createObjectURL(blob)
+      document.body.appendChild(file)
+      file.click()
+      document.body.removeChild(file)
     } catch (error) {
+      console.log(error)
       return false
     }
   }
