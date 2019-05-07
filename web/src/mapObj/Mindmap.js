@@ -5,6 +5,8 @@ import { config } from '../config/config'
 import Line from './Line'
 import ajax from '@/util/ajax'
 import {jCode} from '@/util/common.js'
+import {sendError} from '../util/messageBox'
+
 export default class Mindmap {
   constructor (options) {
     this.objList = []
@@ -82,6 +84,7 @@ export default class Mindmap {
     if (!files[0]) return
     const fileType = files[0].name.substring(files[0].name.lastIndexOf('.')).toLowerCase()
     if (!fileType.match(/.png|.jpg|.jpeg/)) {
+      sendError('请插入正确的图片格式')
       return
     }
     targetObj.options.pirFile = files[0]
