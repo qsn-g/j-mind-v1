@@ -6,8 +6,8 @@
     element
   server端
     koa
- [更多说明](https://jzxznb.github.io)
 ```
+ ![更多说明](https://jzxznb.github.io)
 ### 安装
 ```
 ./install.sh
