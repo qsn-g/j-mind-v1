@@ -70,6 +70,7 @@ export default {
         duration: 1500,
         showClose: true
       })
+      sessionStorage.removeItem(this.mapInfo.mapUid)
     },
     downLoadFile () {
       if (!this.mindMap) {
