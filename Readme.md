@@ -1,11 +1,12 @@
-### 文件结构
+### 所用框架
 ``` bash
-  .
-  ├── server
-  ├── web
-  └── Readme
-  # server: 服务端，目前使用koa2框架
-  # web: h5端，目前使用vue-cli搭建
+  web端 
+    vue 
+    vuex
+    element
+  server端
+    koa
+ [更多说明](https://jzxznb.github.io)
 ```
 ### 安装
 ```
