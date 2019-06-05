@@ -28,8 +28,7 @@ export default {
         {title: 'JMind', index: '0', class: 'el-icon-reading'},
         {title: '查看导图', index: '1', class: 'el-icon-search'},
         {title: '保存导图', index: '2', class: 'el-icon-upload'},
-        {title: '下载文件', index: '3', class: 'el-icon-document-copy'},
-        {title: '分屏(计划中)', index: '4', class: 'el-icon-menu'}
+        {title: '下载文件', index: '3', class: 'el-icon-document-copy'}
       ],
       isCollapse: true
     }
