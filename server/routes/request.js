@@ -28,5 +28,17 @@ router
     }
     ctx.response.body = result
   })
+  .post('/changeMapName', async ctx => {
+    let res = false
+    try {
+      await control.updateName(ctx.request.body)
+      res = true
+    } catch (e) {
+      console.log('改名err')
+      console.log(e)
+      res =false
+    }
+    ctx.response.body = res
+  })
 
 module.exports = router

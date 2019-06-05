@@ -31,8 +31,12 @@
       </el-table-column>
       <el-table-column
       label="导图名称"
-      sortable
-      prop="mapName">
+      sortable>
+        <template slot-scope="scope">
+          <label contenteditable="true" @blur="changeName($event, scope.row.mapUid)">
+            {{scope.row.mapName}}
+          </label>
+        </template>
       </el-table-column>
       <el-table-column
       label="操作">
@@ -57,6 +61,7 @@
 import ajax from '@/util/ajax.js'
 import {mapActions} from 'vuex'
 import {getIndexfromList, isUseFile, readTextData, getFileName, getTimeFromStamp} from '@/util/common.js'
+import {sendSuccess, sendError} from '@/util/messageBox.js'
 export default {
   data () {
     return {
@@ -125,6 +130,14 @@ export default {
         })
       } catch (err) {
         console.error(err)
+      }
+    },
+    async changeName (e, mapUid) {
+      const res = await ajax.changeMapName({mapName: e.target.innerText, mapUid})
+      if (res) {
+        sendSuccess('修改名字成功')
+      } else {
+        sendError('出错')
       }
     }
   }

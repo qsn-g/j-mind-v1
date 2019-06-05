@@ -16,6 +16,9 @@ class Ajax {
   deleteMindMapbyUid (options) {
     return axios.post('/api/request/deleteMapbyID', options)
   }
+  changeMapName (options) {
+    return axios.post('/api/request/changeMapName', options)
+  }
   uploadPicture (formData) {
     return new Promise((resolve) => {
       axios.post('https://sm.ms/api/upload', formData).then((data) => {

@@ -11,6 +11,9 @@ class Control {
     promiseList.push(sqlBasic.updateRecord(jsonInfo))
     return Promise.all(promiseList)
   }
+  updateName (jsonInfo) {
+    return sqlBasic.updateRecord(jsonInfo)
+  }
   deleteInfo (jsonInfo) {
     const mapUid = jsonInfo.mapUid
     let promiseList = []
